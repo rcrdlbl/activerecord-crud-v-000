@@ -74,8 +74,8 @@ end
 def can_update_using_update_method
   # Update movie title to "Wat, huh?"
   Movie.create(title: "Wat?")
-  __
-  __
+  mov = Movie.find_or_create_by(title: "Wat?")
+  mov.update(title: "Wat, huh?")
 end
 
 def can_update_multiple_items_at_once
@@ -83,18 +83,22 @@ def can_update_multiple_items_at_once
   5.times do |i|
     Movie.create(title: "Movie_#{i}", release_date: 2000+i)
   end
-  __
+  Movie.all.each do |mov|
+    mov.update(title: "A Movie")
+  end
 end
 
 def can_destroy_a_single_item
   Movie.create(title: "That One Where the Guy Kicks Another Guy Once")
-  __
-  __
+  mov= Movie.find_or_create_by(title: "That One Where the Guy Kicks Another Guy Once")
+  mov.delete
 end
 
 def can_destroy_all_items_at_once
   10.times do |i|
     Movie.create(title: "Movie_#{i}")
   end
-  __
+  Movie.all.each do |mov|
+    mov.delete
+  end
 end
